@@ -1,13 +1,20 @@
 package character;
 
+import org.newdawn.slick.Image;
+
 import physics.AABoundingRect;
 import physics.BoundingShape;
 import Level.tile.LevelObject;
 
 public class Hook extends LevelObject{
 //	private boolean activated;
-	private double alpha;
-	
+	    
+	    protected Image sprite;
+	    private double alpha;
+	    protected boolean                   moving = false;
+	    protected float                     accelerationSpeed = 1;
+	    protected float                     decelerationSpeed = 1;
+	    protected float                     maximumSpeed = 1;
 	public Hook(float px, float py, float mx, float my) {
 		super(px, py);
 //		activated = false;
@@ -52,7 +59,7 @@ public class Hook extends LevelObject{
 //	 public BoundingShape getBoundingShape(){
 ////	        if(activated){
 //	        return boundingShape;
-////	        }÷÷
+////	        }����
 ////	        return null;
 //	    }
 //	  public void activateHook(float x, float y){
