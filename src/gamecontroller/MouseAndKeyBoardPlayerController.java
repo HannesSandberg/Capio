@@ -22,8 +22,9 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             handleMouseInput(i, delta);
         }
         private void handleMouseInput(Input i, int delta){
+        	player.setAlphaToMouse(i.getMouseX(), i.getAbsoluteMouseY());
         	if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-        		player.activateHook((i.getMouseX()), i.getMouseY());
+        		player.activateHook();
         	}
         }
         private void handleKeyboardInput(Input i, int delta){

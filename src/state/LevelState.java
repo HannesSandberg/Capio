@@ -6,7 +6,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
+
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -35,7 +35,9 @@ import Level.Level;
      
             //at the start of the game we don't have a player yet
             player = new Player(220,220);
+           
             level.addCharacter(player);
+            level.addCharacter(new Player(450,450));
             physics = new Physics();     
             //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
             playerController = new MouseAndKeyBoardPlayerController(player);
@@ -45,14 +47,14 @@ import Level.Level;
             //every update we have to handle the input from the player
         	playerController.handleInput(container.getInput(), delta);
             physics.handlePhysics(level, delta);
+          
         }
      
         public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {
             g.scale(Game.SCALE, Game.SCALE);
             //render the level
             level.render();
-            Circle hej = new Circle(container.getInput().getMouseX(),container.getInput().getMouseY(),2);
-            g.draw(hej);
+            
             
         }
      

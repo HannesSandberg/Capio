@@ -8,11 +8,11 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
  
 public class Player extends Character {
-	private Hook hook;
+
     public Player(float x, float y) throws SlickException{
         super(x,y);
         sprite = new Image("data/img/character/darthvader.png");
-       // hook = new Hook(x, y);
+         hook = new Hook();
     
     boundingShape = new AABoundingRect(x+3, y, 26, 32);
     
@@ -20,15 +20,55 @@ public class Player extends Character {
     maximumSpeed = 1f;
 //    maximumFallSpeed = 10f;
     decelerationSpeed = 10f;
-    hook = null; //new Hook(x , y);
+  
 }
     public void updateBoundingShape(){
         boundingShape.updatePosition(x,y);
     }
-	public void activateHook(float mouseX, float mouseY) {
-		System.out.println("skapar hook");
+	public void activateHook() {
+		hook.activateHook(alpha,x,y);
+	
 		
 		
 	}
-	
+    public void setAlphaToMouse(float mouseX, float mouseY ){
+		alpha = getAlpha(x,y,mouseX, mouseY);
+	}
+    private double getAlpha(float centerX, float centerY, float objX, float objY) {
+    	double alpha = 0;
+		if((objX-centerX)==0){
+			if(objY<centerY){
+				alpha = Math.PI/2;
+			}
+			else{
+				alpha = Math.PI*(3/2);
+			}
+		
+		}
+		else if((objY-centerX)==0){
+			if(objX<centerX){
+				alpha = 0;
+			}
+			else{
+				alpha = Math.PI;
+			}
+		}
+		else {
+			if(objX<centerX && objY < centerY ){
+				alpha =Math.PI + Math.abs((Math.atan((objY-centerY)/(objX-centerX))));
+			}
+			else if(objX<centerX && objY > centerY ){
+				alpha = Math.PI - Math.abs(Math.atan((objY-centerY)/(objX-centerX)));
+			}
+			else if(objX>centerX && objY > centerY ){
+				alpha = Math.abs(Math.atan((objY-centerY)/(objX-centerX)));
+			}
+			else{
+				alpha = 2*Math.PI - Math.abs(Math.atan((objY-centerY)/(objX-centerX)));
+			}
+		
+		}
+		return alpha;
+	}
+    
 }
