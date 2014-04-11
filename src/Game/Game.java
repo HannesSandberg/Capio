@@ -12,7 +12,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import state.LevelState;
  
 public class Game extends StateBasedGame {
- 
+	//test
     //set the window width and then the height according to a aspect ratio
     public static final int     WINDOW_WIDTH  = 1280;
     public static final int     WINDOW_HEIGTH = WINDOW_WIDTH / 16 * 9;
