@@ -53,6 +53,14 @@ public class Hook extends LevelObject{
 		}
 					
 	}
+	public boolean activated() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	public float getVelocitySpeed() {
+		// TODO Auto-generated method stub
+		return decelerationSpeed;
+	}
 	
 	
 	

@@ -6,15 +6,79 @@ import Level.Level;
 import Level.tile.LevelObject;
 import Level.tile.Tile;
 import character.Character;
+import character.Hook;
 public class Physics {
  
    // private final float gravity = 1f;
  
 
     public void handlePhysics(Level level, int delta){
+    	handelHooks(level, delta);
         handleCharacters(level,delta);
     }
-    private void handleCharacters(Level level, int delta){
+    private void handelHooks(Level level, int delta) {
+    	for (character.Character player : level.getCharacters()){
+    		Hook hook = player.getHook();
+    		if(hook.activated() && hook.expand()){
+    			
+    			for (character.Character ch : level.getCharacters()){
+    	    		if(hook.getBoundingShape().checkCollision(ch.getBoundingShape())){
+    	    			hook.returnToPlayer(ch);
+    	    		}
+    		}
+    		}
+    		else{
+    			
+    		double alpha = getAlpha(hook.getX(),hook.getY(),player.getX(),player.getY());
+    		float velocitySpeed = hook.getVelocitySpeed(); 
+    		float newVelocityX = velocitySpeed * (float) Math.cos(alpha);
+    		hook.setXVelocity(newVelocityX);
+    		
+    		float newVelocityY = velocitySpeed * (float) Math.sin(alpha);
+    		hook.setYVelocity(newVelocityY);
+    		handleGameObject(hook,level,delta);
+    			
+    		}
+    		}
+		
+	}
+	private double getAlpha(float centerX, float centerY, float objX, float objY) {
+		double alpha = 0;
+		if((objX-centerX)==0){
+			if(objY<centerY){
+				alpha = 90;
+			}
+			else{
+				alpha = 270;
+			}
+		
+		}
+		else if((objY-centerX)==0){
+			if(objX<centerX){
+				alpha = 0;
+			}
+			else{
+				alpha = 180;
+			}
+		}
+		else {
+			if(objX<centerX && objY < centerY ){
+				alpha =180 - Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
+			}
+			else if(objX<centerX && objY > centerY ){
+				alpha = 180 + Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
+			}
+			else if(objX>centerX && objY > centerY ){
+				alpha = 360 - Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
+			}
+			else{
+				alpha = Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
+			}
+			
+		}
+		return alpha;
+	}
+	private void handleCharacters(Level level, int delta){
         for(character.Character c : level.getCharacters()){
  
             //and now decelerate the character if he is not moving anymore
@@ -178,4 +242,6 @@ public class Physics {
         }
     
     }
+    
+    
 }

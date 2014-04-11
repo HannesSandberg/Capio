@@ -15,7 +15,7 @@ public abstract class Character  extends LevelObject{
     protected float                     accelerationSpeed = 1;
     protected float                     decelerationSpeed = 1;
     protected float                     maximumSpeed = 1;
- 
+    protected Hook hook;
     public Character(float x, float y) throws SlickException{
     	super(x,y);
         this.x = x;
@@ -95,5 +95,10 @@ public abstract class Character  extends LevelObject{
     public void decelerate(int delta) {
         
     }
+
+	public Hook getHook() {
+		// TODO Auto-generated method stub
+		return null;
+	}
     
 }
