@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="18">
+ <tileset firstgid="1" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="18">
+  <image source="/map/hyptosis_tile-art-batch-1.png" width="960" height="960"/>
+  <tile id="1328">
+   <properties>
+    <property name="tileType" value="background"/>
+   </properties>
+  </tile>
+  <tile id="1497">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Borders" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OwQnAIBBFQZOQGlJH+r/ZVW52oIugS2Ae7O2zTD1KqcnXK9s26/vO2O/IbrSZ8T1XzBfZjTZR33vvOz4+Pj4+Pj4+Pj4+Pj4+Pr4VvqzjW+eT9N8aYwsD/QAZAAA=
+  </data>
+ </layer>
+ <layer name="Tree" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UwQ2AMAiF4SadzkmcyElc0KsHAjVCoc3/3Zo0EumD1gAAXq6unyNqfKl3d/3s4f3Nw6gv3ZnpdLqDcZnvPSL6vbUZrdAbbSesNAsRu9dTxO71YuUwO6dWDmfmNLsXloozu9tsShmo9I9SBjL2T6WeSCrvZAAA8N8DhFFQHQAZAAA=
+  </data>
+ </layer>
+</map>

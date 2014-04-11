@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="64" height="36" tilewidth="20" tileheight="20">
+ <tileset firstgid="1" name="mike_tiles_20x20" tilewidth="20" tileheight="20" spacing="2" margin="2">
+  <image source="Platformer assets pixel (900 assets)/Random sets/mike_tiles_20x20.png" trans="5e81a2" width="1000" height="1000"/>
+  <terraintypes>
+   <terrain name="Stones" tile="-1"/>
+  </terraintypes>
+  <tile id="45" terrain="0,0,0,0"/>
+  <tile id="46" terrain="0,0,0,0"/>
+  <tile id="47" terrain="0,,0,"/>
+  <tile id="90" terrain="0,0,0,0"/>
+  <tile id="91" terrain="0,0,0,0"/>
+  <tile id="92" terrain="0,,0,0"/>
+  <tile id="135" terrain="0,0,0,0"/>
+  <tile id="136" terrain="0,0,0,0"/>
+  <tile id="137" terrain="0,0,0,"/>
+ </tileset>
+ <tileset firstgid="2026" name="mike_tiles_20x20_v2" tilewidth="20" tileheight="20" spacing="2" margin="2">
+  <image source="Platformer assets pixel (900 assets)/Random sets/mike_tiles_20x20_v2.png" trans="5e81a2" width="1000" height="1000"/>
+ </tileset>
+ <layer name="Grass" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztz8EJAAAIA7G6/9JuIYo56L9JVMPb9oOfn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+f/7r/cw0augdx
+  </data>
+ </layer>
+ <layer name="OuterEdge" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztz7kNwDAQA8GDX7n/hq0G5PACcxZgzhlVdTRvVfePZ27/+PP3zuLnz42fnz83fn7+3Pj5+XPj5+fPjZ+fPzd+fv7c+Pn5c+Pnv+a25q3q/nHPvdOUAn8=
+  </data>
+ </layer>
+ <layer name="InnerEdge" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztzyEOwDAQA8FIUZP0/x8uKPThC9gdaOQdo99bbKf9xT1Psc32F/fYn+znsD/Zz2F/sp/D/mQ/h/3Jfg77k/0c9if7OexP9nPYn+znsD/Zz2F/sp9jF9tqf/H7AKxTAS8=
+  </data>
+ </layer>
+ <layer name="River" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztzzENADAMwLDe4w94fwlsUhwpADzzprOuxc/Pz8/Pz9+Ln5+fn5+fvxc/Pz8/Pz9/L35+fn5+fv5e/Pw/+C91KwWh
+  </data>
+ </layer>
+ <layer name="WallRight" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENwCAMAEGXDBExPCJpshDj4BJlhPhO+gE+AgAAAP7lahEje48qufP3+VSJf//+6/73/J3ZOgIAAIAKNmrpF1M=
+  </data>
+ </layer>
+ <layer name="WallLeft" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztz7ENgDAUQ8GUfwfE8gHRsBDjJF3EAlD4Tnq93RoAAAAJ7lr12VZ/L/rWVe8O/6P473/y/6dW52wP+w8AAAAJBh9EF0c=
+  </data>
+ </layer>
+ <layer name="StonesWright" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJgDAABMFUpOlH7UdTtVeFBzID+98xAAAAAP5nS3ua7ZGSI53pao+U3OlJqz0CAAAA8IEXax8DPQ==
+  </data>
+ </layer>
+ <layer name="StonesLeft" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztzsEJgDAABMFUpOlH7UdTtdeEHMgM7H/HAAAAAP5uS3ua7ZGSI53pao+U3OlJqz0CAAAAwCdegHwDPQ==
+  </data>
+ </layer>
+ <layer name="Torches" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJzt08EJADAIBEGfqdi0nx4CIuhMBXuPiwAAAIBd7ukuqJcLNsIP/wcAAAAmervUAfs=
+  </data>
+ </layer>
+ <layer name="HookDollRight" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztzkENAAAIBKB7Gtn4ttDNQQISAAAAALZ1XQ8AAAAA+GIAWn8AgQ==
+  </data>
+ </layer>
+ <layer name="HookDollLeft" width="64" height="36">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIA7CdSEY+Jkg4aBU0AQAAAGBD1/UAAAAAgI8GcH8AgQ==
+  </data>
+ </layer>
+</map>
