@@ -4,6 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import Level.tile.LevelObject;
+import physics.AABoundingRect;
 import physics.BoundingShape;
  
 public abstract class Character  extends LevelObject{
@@ -15,13 +16,15 @@ public abstract class Character  extends LevelObject{
     protected float                     accelerationSpeed = 1;
     protected float                     decelerationSpeed = 1;
     protected float                     maximumSpeed = 1;
-    protected Hook hook;
+    protected Hook 						hook = null;
+    protected double                   	alpha = 90;                    
     public Character(float x, float y) throws SlickException{
     	super(x,y);
         this.x = x;
         this.y = y;
         //in case we forget to set the image, we don't want the game to crash, but it still has to be obvious that something was forgotten
         sprite = new Image("data/img/placeholder_sprite.png");
+        boundingShape = new AABoundingRect(x+3, y, 26, 32);
     }
  
     public float getX(){
@@ -34,6 +37,7 @@ public abstract class Character  extends LevelObject{
  
     public void render(){
         sprite.draw(x-2,y-2);
+        hook.render();
     }
     
     public void updateBoundingShape(){
@@ -95,10 +99,11 @@ public abstract class Character  extends LevelObject{
     public void decelerate(int delta) {
         
     }
-
+    
 	public Hook getHook() {
 		// TODO Auto-generated method stub
-		return null;
+		return hook;
 	}
+	
     
 }

@@ -16,68 +16,61 @@ public class Physics {
     	handelHooks(level, delta);
         handleCharacters(level,delta);
     }
-    private void handelHooks(Level level, int delta) {
-    	for (character.Character player : level.getCharacters()){
-    		Hook hook = player.getHook();
-    		if(hook.activated() && hook.expand()){
-    			
-    			for (character.Character ch : level.getCharacters()){
-    	    		if(hook.getBoundingShape().checkCollision(ch.getBoundingShape())){
-    	    			hook.returnToPlayer(ch);
-    	    		}
-    		}
-    		}
-    		else{
-    			
-    		double alpha = getAlpha(hook.getX(),hook.getY(),player.getX(),player.getY());
-    		float velocitySpeed = hook.getVelocitySpeed(); 
-    		float newVelocityX = velocitySpeed * (float) Math.cos(alpha);
-    		hook.setXVelocity(newVelocityX);
-    		
-    		float newVelocityY = velocitySpeed * (float) Math.sin(alpha);
-    		hook.setYVelocity(newVelocityY);
-    		handleGameObject(hook,level,delta);
-    			
-    		}
-    		}
-		
-	}
-	private double getAlpha(float centerX, float centerY, float objX, float objY) {
-		double alpha = 0;
-		if((objX-centerX)==0){
-			if(objY<centerY){
-				alpha = 90;
-			}
-			else{
-				alpha = 270;
-			}
-		
-		}
-		else if((objY-centerX)==0){
-			if(objX<centerX){
-				alpha = 0;
-			}
-			else{
-				alpha = 180;
-			}
-		}
-		else {
-			if(objX<centerX && objY < centerY ){
-				alpha =180 - Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
-			}
-			else if(objX<centerX && objY > centerY ){
-				alpha = 180 + Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
-			}
-			else if(objX>centerX && objY > centerY ){
-				alpha = 360 - Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
-			}
-			else{
-				alpha = Math.abs(Math.toDegrees(Math.atan((objY-centerY)/(objX-centerX))));
-			}
+
+	private void handelHooks(Level level, int delta) {
+		for (character.Character player : level.getCharacters()) {
+			Hook hook = player.getHook();
 			
+			if (hook.isActivated()) {
+			
+				if(hook.getXVelocity() == 0){
+					
+					
+				}
+				if(hook.getYVelocity() == 0){
+					hook.setYVelocity(hook.getYVelocity() * (-1));
+				}
+				if (hook.isExpanding()) {
+					
+					for (character.Character ch : level.getCharacters()) {
+						if(player != ch){
+						if (hook.getBoundingShape().checkCollision(
+								ch.getBoundingShape())) {
+							hook.returnToPlayer(ch);
+							
+						}
+						}
+					}
+				} else {
+
+					double alpha = getAlpha(hook.getX(), hook.getY(),
+							player.getX(), player.getY());
+					float velocitySpeed = hook.getVelocitySpeed();
+					float newVelocityX = velocitySpeed
+							* (float) Math.cos(alpha);
+					hook.setXVelocity(newVelocityX);
+
+					float newVelocityY = velocitySpeed
+							* (float) Math.sin(alpha);
+					hook.setYVelocity(newVelocityY);
+					handleGameObject(hook, level, delta);
+					Character hookedPlayer = hook.getHookedPlayer();
+					if (hookedPlayer != null) {
+						hookedPlayer.setXVelocity(newVelocityX);
+						hookedPlayer.setYVelocity(newVelocityY);
+					}
+
+				}
+			
+				handleGameObject(hook,level,delta);
+					if(hook.getBoundingShape().checkCollision(player.getBoundingShape())&&!hook.isExpanding() ){
+					hook.stop();
+				}
+			}
 		}
-		return alpha;
+
 	}
+	
 	private void handleCharacters(Level level, int delta){
         for(character.Character c : level.getCharacters()){
  
@@ -104,31 +97,7 @@ public class Physics {
         }
         return false;
     }
-    
-    private boolean isOnGroud(LevelObject obj, Tile[][] mapTiles){
-        //we get the tiles that are directly "underneath" the characters, also known as the ground tiles
-      //  ArrayList<Tile> tiles = obj.getBoundingShape().getGroundTiles(mapTiles);
-// 
-//        //we lower the the bounding object a bit so we can check if we are actually a bit above the ground
-//        obj.getBoundingShape().movePosition(0, 1);
-// 
-//        for(Tile t : tiles){
-//            //not every tile has a bounding shape (air tiles for example)
-//            if(t.getBoundingShape() != null){
-//                //if the ground and the lowered object collide, then we are on the ground
-//                if(t.getBoundingShape().checkCollision(obj.getBoundingShape())){
-//                    //don't forget to move the object back up even if we are on the ground!
-//                    obj.getBoundingShape().movePosition(0, -1);
-//                    return true;
-//                }
-//            }
-//        }
  
-        //and obviously we have to move the object back up if we don't hit the ground
-        obj.getBoundingShape().movePosition(0, -1);
- 
-        return false;
-    }
    
     
 
@@ -215,7 +184,13 @@ public class Physics {
                 	
                    //undo our step, and set the velocity and amount we still have to move to 0, because we can't move in that direction
                     obj.setX(obj.getX()-step_x);
+                    if(obj instanceof Hook){
+                     Hook hook = (Hook) obj;
+                    	obj.setXVelocity(hook.getXVelocity() * (-1));
+                    }
+                    else{
                     obj.setXVelocity(0);
+                    }
                     x_movement = 0;
                 }
  
@@ -234,7 +209,13 @@ public class Physics {
               
                 if(checkCollision(obj,level.getTiles())){
                     obj.setY(obj.getY()-step_y);
-                    obj.setYVelocity(0);
+                    if(obj instanceof Hook){
+                        Hook hook = (Hook) obj;
+                       	obj.setYVelocity(hook.getYVelocity() * (-1));
+                       }
+                       else{
+                       obj.setYVelocity(0);
+                       }
                     y_movement = 0;
                    
                 }
@@ -242,6 +223,41 @@ public class Physics {
         }
     
     }
-    
+    private double getAlpha(float centerX, float centerY, float objX, float objY) {
+    	double alpha = 0;
+		if((objX-centerX)==0){
+			if(objY<centerY){
+				alpha = Math.PI/2;
+			}
+			else{
+				alpha = Math.PI*(3/2);
+			}
+		
+		}
+		else if((objY-centerX)==0){
+			if(objX<centerX){
+				alpha = 0;
+			}
+			else{
+				alpha = Math.PI;
+			}
+		}
+		else {
+			if(objX<centerX && objY < centerY ){
+				alpha =Math.PI + Math.abs((Math.atan((objY-centerY)/(objX-centerX))));
+			}
+			else if(objX<centerX && objY > centerY ){
+				alpha = Math.PI - Math.abs(Math.atan((objY-centerY)/(objX-centerX)));
+			}
+			else if(objX>centerX && objY > centerY ){
+				alpha = Math.abs(Math.atan((objY-centerY)/(objX-centerX)));
+			}
+			else{
+				alpha = 2*Math.PI - Math.abs(Math.atan((objY-centerY)/(objX-centerX)));
+			}
+		
+		}
+		return alpha;
+	}
     
 }
