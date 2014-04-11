@@ -23,13 +23,7 @@ public class Physics {
 			
 			if (hook.isActivated()) {
 			
-				if(hook.getXVelocity() == 0){
-					
-					
-				}
-				if(hook.getYVelocity() == 0){
-					hook.setYVelocity(hook.getYVelocity() * (-1));
-				}
+			
 				if (hook.isExpanding()) {
 					
 					for (character.Character ch : level.getCharacters()) {
@@ -53,8 +47,10 @@ public class Physics {
 					float newVelocityY = velocitySpeed
 							* (float) Math.sin(alpha);
 					hook.setYVelocity(newVelocityY);
-					handleGameObject(hook, level, delta);
+				
+					
 					Character hookedPlayer = hook.getHookedPlayer();
+					
 					if (hookedPlayer != null) {
 						hookedPlayer.setXVelocity(newVelocityX);
 						hookedPlayer.setYVelocity(newVelocityY);
