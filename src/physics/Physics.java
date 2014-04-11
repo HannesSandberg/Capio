@@ -18,55 +18,56 @@ public class Physics {
     }
 
 	private void handelHooks(Level level, int delta) {
+		float newVelocityX = 0;
+		float newVelocityY = 0;
+		Character hookedPlayer = null;
 		for (character.Character player : level.getCharacters()) {
 			Hook hook = player.getHook();
-			
+
 			if (hook.isActivated()) {
-			
-			
-				if (hook.isExpanding()) {
-					
+				hookedPlayer = hook.getHookedPlayer();
+
+				if (hookedPlayer == null) {
 					for (character.Character ch : level.getCharacters()) {
-						if(player != ch){
-						if (hook.getBoundingShape().checkCollision(
-								ch.getBoundingShape())) {
-							hook.returnToPlayer(ch);
-							
-						}
+						if (player != ch) {
+							if (hook.getBoundingShape().checkCollision(
+									ch.getBoundingShape())) {
+								hook.returnToPlayer(ch);
+
+							}
 						}
 					}
-				} else {
+				}
+				if (!hook.isExpanding()) {
 
 					double alpha = getAlpha(hook.getX(), hook.getY(),
 							player.getX(), player.getY());
 					float velocitySpeed = hook.getVelocitySpeed();
-					float newVelocityX = velocitySpeed
-							* (float) Math.cos(alpha);
+					newVelocityX = velocitySpeed * (float) Math.cos(alpha);
 					hook.setXVelocity(newVelocityX);
 
-					float newVelocityY = velocitySpeed
-							* (float) Math.sin(alpha);
+					newVelocityY = velocitySpeed * (float) Math.sin(alpha);
 					hook.setYVelocity(newVelocityY);
+
 				
-					
-					Character hookedPlayer = hook.getHookedPlayer();
-					
-					if (hookedPlayer != null) {
-						hookedPlayer.setXVelocity(newVelocityX);
-						hookedPlayer.setYVelocity(newVelocityY);
-					}
 
 				}
-			
-				handleGameObject(hook,level,delta);
-					if(hook.getBoundingShape().checkCollision(player.getBoundingShape())&&!hook.isExpanding() ){
+				hookedPlayer = hook.getHookedPlayer();
+				if (hookedPlayer != null) {
+					hookedPlayer.setXVelocity(newVelocityX);
+					hookedPlayer.setYVelocity(newVelocityY);
+				}
+				handleGameObject(hook, level, delta);
+				if (hook.getBoundingShape().checkCollision(
+						player.getBoundingShape())
+						&& !hook.isExpanding()) {
 					hook.stop();
 				}
 			}
 		}
 
 	}
-	
+
 	private void handleCharacters(Level level, int delta){
         for(character.Character c : level.getCharacters()){
  
