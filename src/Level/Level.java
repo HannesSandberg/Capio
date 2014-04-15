@@ -1,7 +1,10 @@
 package Level;
 
+import Game.Game;
+
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -9,24 +12,28 @@ import Level.tile.GroundTile;
 import Level.tile.SolidTile;
 import Level.tile.Tile;
 import character.Character;
+import character.Player;
 
 public class Level {
 
-	private Tile[][] tiles;
+	private Tile[][] riverAndBorderTiles;
+	private Tile[][] borderTiles;
 
 	private TiledMap map;
 	// a list of all characters present somewhere on this map
 	private ArrayList<Character> characters;
-
-	public Level(String level) throws SlickException {
-		map = new TiledMap("data/levels/MyFirstGame.tmx", "data/img");
+	private Player player;
+	public Level(String level, Player player) throws SlickException {
+		map = new TiledMap("data/levels/RiverMap.tmx", "data/img");
 		characters = new ArrayList<Character>();
 		loadTileMap();
+		this.player = player;
 	}
 
 	private void loadTileMap() {
 		// create an array to hold all the tiles in the map
-		tiles = new Tile[map.getWidth()][map.getHeight()];
+		riverAndBorderTiles = new Tile[map.getWidth()][map.getHeight()];
+		borderTiles = new Tile[map.getWidth()][map.getHeight()];
 
 		int layerIndex = map.getLayerIndex("Borders");
 
@@ -45,7 +52,18 @@ public class Level {
 				int tileID = map.getTileId(x, y, layerIndex);
 
 				Tile tile = null;
-
+				Tile onlyBorderTiles = null;
+				switch (map.getTileProperty(tileID, "tileType", "solid")) {
+				case "background":
+					onlyBorderTiles = new GroundTile(x, y);
+					break;
+				case "river":
+					onlyBorderTiles = new GroundTile(x, y);
+					break;
+				default:
+					onlyBorderTiles = new SolidTile(x, y);
+					break;
+				}
 				// and check what kind of tile it is (
 				switch (map.getTileProperty(tileID, "tileType", "solid")) {
 				case "background":
@@ -55,7 +73,8 @@ public class Level {
 					tile = new SolidTile(x, y);
 					break;
 				}
-				tiles[x][y] = tile;
+				riverAndBorderTiles[x][y] = tile;
+				borderTiles[x][y]=onlyBorderTiles;
 			}
 		}
 	}
@@ -70,18 +89,78 @@ public class Level {
 		return characters;
 	}
 
-	public Tile[][] getTiles() {
-		return tiles;
+	public Tile[][] getRiverAndBorderTiles() {
+		return riverAndBorderTiles;
+		
+	}
+	public Tile[][] getBorderTiles() {
+		return borderTiles;
+		
 	}
 
-	public void render() {
-		// render the map first
-		map.render(0, 0, 0, 0, 32, 32);
+	public void render(Graphics g){
+		 
+        int offset_x = getXOffset();
+        int offset_y = getYOffset();
+ 
+        //render the map first
+        map.render(-(offset_x%32), -(offset_y%32), offset_x/32, offset_y/32, 33, 19);
+ 
+        //and then render the characters on top of the map
+        for(Character c : characters){
+            c.render(offset_x,offset_y,g);
+        }
+ 
+    }
+	
 
-		// and then render the characters on top of the map
-		for (character.Character c : characters) {
-			c.render();
+	public int getXOffset() {
+		int offset_x = 0;
+
+		// the first thing we are going to need is the half-width of the screen,
+		// to calculate if the player is in the middle of our screen
+		int half_width = (int) (Game.WINDOW_WIDTH / Game.SCALE / 2);
+
+		// next up is the maximum offset, this is the most right side of the
+		// map, minus half of the screen offcourse
+		int maxX = (int) (map.getWidth() * 32) - half_width;
+
+		// now we have 3 cases here
+		if (player.getX() < half_width) {
+			// the player is between the most left side of the map, which is
+			// zero and half a screen size which is 0+half_screen
+			offset_x = 0;
+		} else if (player.getX() > maxX) {
+			// the player is between the maximum point of scrolling and the
+			// maximum width of the map
+			// the reason why we substract half the screen again is because we
+			// need to set our offset to the topleft position of our screen
+			offset_x = maxX - half_width;
+		} else {
+			// the player is in between the 2 spots, so we set the offset to the
+			// player, minus the half-width of the screen
+			offset_x = (int) (player.getX() - half_width);
 		}
+
+		return offset_x;
 	}
+    public int getYOffset(){
+        int offset_y = 0;
+ 
+        int half_heigth = (int) (Game.WINDOW_HEIGTH/Game.SCALE/2);
+ 
+        int maxY = (int) (map.getHeight()*32)-half_heigth;
+ 
+        if(player.getY() < half_heigth){
+            offset_y = 0;
+        }else if(player.getY() > maxY){
+            offset_y = maxY-half_heigth;
+        }else{
+            offset_y = (int) (player.getY()-half_heigth);
+        }
+ 
+        return offset_y;
+    }
+
 
 }

@@ -7,6 +7,7 @@ import Level.tile.LevelObject;
 import Level.tile.Tile;
 import character.Character;
 import character.Hook;
+import character.MealyAttack;
 public class Physics {
  
    // private final float gravity = 1f;
@@ -14,9 +15,61 @@ public class Physics {
 
     public void handlePhysics(Level level, int delta){
     	handelHooks(level, delta);
+        handelmealyAttack(level, delta);
         handleCharacters(level,delta);
+        handleHockebleObjects(level,delta);
     }
+   
+    
+    
+    
+    
+    private void handleHockebleObjects(Level level, int delta) {
+    	for (character.Character player : level.getCharacters()) {
+			MealyAttack mealyAttack = player.getMealyAttack();
+			if(mealyAttack.isActivated()){
+			for (character.Character ch : level.getCharacters()) {
+				if (player != ch) {
+					if (mealyAttack.getBoundingShape().checkCollision(
+							ch.getBoundingShape())) {
+						mealyAttack.hitt(ch,player);
 
+					}
+				}
+			}
+			handleGameObject(mealyAttack,level.getBorderTiles(),delta);
+			mealyAttack.checkRange();
+		}
+		
+		}
+	
+}
+
+
+
+
+
+	private void handelmealyAttack(Level level, int delta){
+   
+		
+		for (character.Character player : level.getCharacters()) {
+			MealyAttack mealyAttack = player.getMealyAttack();
+			if(mealyAttack.isActivated()){
+			for (character.Character ch : level.getCharacters()) {
+				if (player != ch) {
+					if (mealyAttack.getBoundingShape().checkCollision(
+							ch.getBoundingShape())) {
+						mealyAttack.hitt(ch,player);
+
+					}
+				}
+			}
+			handleGameObject(mealyAttack,level.getBorderTiles(),delta);
+			mealyAttack.checkRange();
+		}
+		
+		}
+    }
 	private void handelHooks(Level level, int delta) {
 		float newVelocityX = 0;
 		float newVelocityY = 0;
@@ -32,7 +85,7 @@ public class Physics {
 						if (player != ch) {
 							if (hook.getBoundingShape().checkCollision(
 									ch.getBoundingShape())) {
-								hook.returnToPlayer(ch);
+								hook.returnToPlayer(ch,player);
 
 							}
 						}
@@ -56,8 +109,11 @@ public class Physics {
 				if (hookedPlayer != null) {
 					hookedPlayer.setXVelocity(newVelocityX);
 					hookedPlayer.setYVelocity(newVelocityY);
+					handleGameObject(hookedPlayer, level.getBorderTiles(), delta);
+					hookedPlayer.setXVelocity(0);
+					hookedPlayer.setYVelocity(0);
 				}
-				handleGameObject(hook, level, delta);
+				handleGameObject(hook, level.getBorderTiles(), delta);
 				if (hook.getBoundingShape().checkCollision(
 						player.getBoundingShape())
 						&& !hook.isExpanding()) {
@@ -75,8 +131,12 @@ public class Physics {
             if(!c.isMoving()){
                 c.decelerate(delta);
             }
+           if(!c.isDead()||!c.isHooked()){
+        	   handleGameObject(c,level.getRiverAndBorderTiles(),delta); 
+           }
            
-            handleGameObject(c,level,delta);
+        
+            
         }
     }
     
@@ -99,7 +159,7 @@ public class Physics {
     
 
     
-    private void handleGameObject(LevelObject obj, Level level, int delta){
+    private void handleGameObject(LevelObject obj, Tile[][] tiles, int delta){
     
         //first update the onGround of the object
       //  obj.setOnGround(isOnGroud(obj,level.getTiles()));
@@ -177,7 +237,7 @@ public class Physics {
                 obj.setX(obj.getX()+step_x);
  
                 //if we collide with any of the bounding shapes of the tiles we have to revert to our original position
-                if(checkCollision(obj,level.getTiles())){
+                if(checkCollision(obj,tiles)){
                 	
                    //undo our step, and set the velocity and amount we still have to move to 0, because we can't move in that direction
                     obj.setX(obj.getX()-step_x);
@@ -204,7 +264,7 @@ public class Physics {
  
                 
               
-                if(checkCollision(obj,level.getTiles())){
+                if(checkCollision(obj,tiles)){
                     obj.setY(obj.getY()-step_y);
                     if(obj instanceof Hook){
                         Hook hook = (Hook) obj;

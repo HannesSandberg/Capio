@@ -6,15 +6,17 @@ import physics.AABoundingRect;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import Game.Game;
  
 public class Player extends Character {
 
     public Player(float x, float y) throws SlickException{
         super(x,y);
-        sprite = new Image("data/img/character/darthvader.png");
+        sprite = new Image("data/img/character/Robot.png");
          hook = new Hook();
     
-    boundingShape = new AABoundingRect(x+3, y, 26, 32);
+    boundingShape = new AABoundingRect(x+3, y, sprite.getWidth(), sprite.getHeight());
     
     accelerationSpeed = 0.001f;
     maximumSpeed = 1f;
@@ -27,12 +29,14 @@ public class Player extends Character {
     }
 	public void activateHook() {
 		hook.activateHook(alpha,x,y);
-	
-		
-		
-	}
+		}
+	public void activateMealyAttack() {
+		mealyAttack.activate(alpha,x,y);
+		}
     public void setAlphaToMouse(float mouseX, float mouseY ){
-		alpha = getAlpha(x,y,mouseX, mouseY);
+  
+		alpha = getAlpha(x- offset_x,y-offset_y,mouseX, mouseY);
+		
 	}
     private double getAlpha(float centerX, float centerY, float objX, float objY) {
     	double alpha = 0;
@@ -70,5 +74,9 @@ public class Player extends Character {
 		}
 		return alpha;
 	}
+    
+    
+    
+   
     
 }

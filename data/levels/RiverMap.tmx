@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="70" height="70" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="32">
+  <image  source="/map/hyptosis_tile-art-batch-1.png" width="960" height="960"/>
+  <tile id="80">
+   <properties>
+    <property name="tileType" value="background"/>
+   </properties>
+  </tile>
+  <tile id="116">
+   <properties>
+    <property name="tileType" value="river"/>
+   </properties>
+  </tile>
+  <tile id="146">
+   <properties>
+    <property name="tileType" value="river"/>
+   </properties>
+  </tile>
+  <tile id="147">
+   <properties>
+    <property name="tileType" value="river"/>
+   </properties>
+  </tile>
+  <tile id="176">
+   <properties>
+    <property name="tileType" value="river"/>
+   </properties>
+  </tile>
+  <tile id="177">
+   <properties>
+    <property name="tileType" value="river"/>
+   </properties>
+  </tile>
+  <tile id="207">
+   <properties>
+    <property name="tileType" value="river"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Borders" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3QMRGAMBREwRSRhQBaxKAEjIASJBEDnzSZJDNs8eq72ZxSypKatA5sqdTjw5fLNqijtAedHfZndblKT9DNhQsXLly4cOHChQsXLly4cOHChQsXLly4cOHChQsXLly4cOHChQsXLly4cOHChQsXLly4cOHChQsXLly4cOHChQsXLly4cOEykcufi1wkqXUvBxSZnpBMAAA=
+  </data>
+ </layer>
+ <layer name="Stuff" width="70" height="70">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3XO2rDQBQFUAlVadwl3kL64DV4N3GMay8h/qwjcbLFPEiZAUVg5sOcAxc1Ar2Z4qI3DADQlkvkWnqICn1FvksPAQ2b65Zeu2euW3QPANCiXeQtsi89SGXeI6fIufQglfmIfEZupQfJrNcdaI4daBl9m6Zv03rtW4DWrKb7vle7xzjHU2Sd6Tzb8W8exjzfXuIl7uM1ssl0L89jOrVZci/HO73TgkOcYzf9PumT3TDNbphmN8ynt/86AAAAAAAAAOB/fgBZo/ogkEwAAA==
+  </data>
+ </layer>
+</map>

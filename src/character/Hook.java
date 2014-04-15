@@ -16,12 +16,11 @@ public class Hook extends LevelObject{
 	    protected float                     accelerationSpeed = 1;
 	    protected float                     decelerationSpeed = 1f;
 	    protected float                     maximumSpeed = 1f;
-	    private boolean                     expanding = false; 
-	    private float                       maxLength= 1000;
+	    private float                       maxLength= 2000;
 	    private float                       maxLengthCounter= 0;
 	    private boolean 				 	activated = false;
 	    private Character 					character=null;
-	   
+	    private float                       hookDamage = 10;
 	public Hook() throws SlickException {
 		super(0, 0);
 		sprite = new Image("data/img/character/Bone_Hook.png");
@@ -35,18 +34,20 @@ public class Hook extends LevelObject{
 		
 		return decelerationSpeed;
 	}
-	public void returnToPlayer(Character ch) {
-		this.character=ch;
-		expanding= false;
+	public void returnToPlayer(Character target, Character hitter ) {
+		this.character=target;
+		target.lowerHp(hookDamage,hitter);
+		target.setHooked(true);
+		
 	}
 	public boolean isExpanding() {
-		if(maxLengthCounter>maxLength){
-			expanding=false;
+		if(maxLengthCounter>maxLength||character!=null){
+			return false;
 		}
-		return expanding;
+		return true;
 	}
 	public void activateHook(double alphaToMuse, float x, float y) {
-		expanding= true;
+		if(!activated){
 		activated = true;
 		super.x = x;
 		super.y = y;
@@ -57,6 +58,7 @@ public class Hook extends LevelObject{
 		setXVelocity(newVelocityX);
 		float newVelocityY = decelerationSpeed * (float) Math.sin(alphaToMuse);
 		setYVelocity(newVelocityY);
+		}
 		
 	}
 		@Override
@@ -80,21 +82,22 @@ public class Hook extends LevelObject{
 		public void stop() {
 			
 			super.boundingShape=null;
-			expanding= false;
 			activated = false;
 		    maxLengthCounter = 0;
 			sprite.draw(1,1);
 			if(character != null){
-			character.setXVelocity(0);
-			character.setYVelocity(0);
-			}
+			character.setHooked(false);
 			character=null;
+			}
+			
 		}
 		
-		public void render(){
-				
+		  public void render(float offset_x, float offset_y){
+		    	 
+              
+	             
 			if(activated){
-			 sprite.draw(x-2,y-2);
+				sprite.draw(x-2-offset_x, y-2-offset_y);
 			}
 		}
 	
