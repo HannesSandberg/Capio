@@ -7,7 +7,7 @@ import gamecontroller.PlayerController;
 import org.newdawn.slick.Input;
 
 import character.Player;
- 
+ import Game.Game;
 public class MouseAndKeyBoardPlayerController extends PlayerController {
  
  
@@ -22,7 +22,11 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
             handleMouseInput(i, delta);
         }
         private void handleMouseInput(Input i, int delta){
-        	player.setAlphaToMouse(i.getMouseX(), i.getAbsoluteMouseY());
+        	
+        	double mouseX = (double) i.getMouseX()/Game.SCALE;
+        	double mouseY = (double) i.getMouseY()/Game.SCALE;
+        
+        	player.setAlphaToMouse((float)mouseX, (float)mouseY);
         	if(i.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
         		player.activateHook();
         	}
@@ -53,7 +57,9 @@ public class MouseAndKeyBoardPlayerController extends PlayerController {
                 player.setXVelocity(0);
             	player.setYVelocity(0);
             }
-
+            if(i.isKeyDown(Input.KEY_SPACE)){
+            	player.activateMealyAttack();
+            }
         }
      
     }

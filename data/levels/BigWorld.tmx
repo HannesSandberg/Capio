@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="hyptosis_tile-art-batch-1" tilewidth="32" tileheight="32">
+  <image source="/map/hyptosis_tile-art-batch-1.png" width="960" height="960"/>
+  <tile id="158">
+   <properties>
+    <property name="tileType" value="background"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Borders" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3VsQ3CMABFwTSwCCzKENQMwS6wCAOQggoF6OIncsXJra2nL1+naboCP50Z4luPC6vSo0WPFj1a9GjRo0WPFj1a9GjRo0WPFj1attBjN9svnKPvtdUeh9lx4Rx9r632sI8W+2ixjxb7aLGPFvtosY8W+0CP/6BHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHix4terTo0aJHy1o9Th+Mfn/Nmj1us8fLXY/hPR5v9BjX47LQY/Tbi/znLXq06NGiR4seLXq06NGiR4seLXq06NGiR4seLXq06NGiR4seLXq06NGiR8uvHqzvUw+AsieJgVwRQJwAAA==
+  </data>
+ </layer>
+ <layer name="Stuff" width="100" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3cOY7UQBiG4bIbGETAFnOFAa6BWCI4ATcA8jkGywnYM5aElD1iS0jZM5aEBPEdAHUXpXEbm+eRXqllVbUs/6oOxtKUstqDijV/s651feueuXm7zeta17fumZuf27yudX3rHpiaq10p19L1dCPdTLfS7W7sO5uO03lWZ7rV12o8zJ5H6XF6kp6mZ+m5eVQ7l2d1Pl3oll+r8S7r36cP6WP6lD6nL+YxiFXnpu9LWaQdaWfalTbS7n599/g/aT03AAAAAACtLnalXEqX0xV/mxzdnczgbrqX7ptHtSHev77I3pfpVXqd3phHtaHev37N/m/pe/phHtWGev+6ry9lfzqQDnp3WG2o96+b2X84HUlHzWN0xzODE+lkOmUeAAAAAAAAAAAAAAAAAAAAAADwzzk29g3MWO2z3Rr0Lsa3d7H88681/o+qPRXXWuYxpXN0tl/eocXq71inuZ+PqVk2jz+dL9ZjSr9BwLT5rQcAAAAAAADm5jfAdCSAQJwAAA==
+  </data>
+ </layer>
+</map>

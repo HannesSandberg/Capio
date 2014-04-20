@@ -29,15 +29,20 @@ import Level.Level;
         }
      
         public void init(GameContainer container, StateBasedGame sbg) throws SlickException {
-     
+			//at the start of the game we don't have a player yet
+			player = new Player(220,220);
             //once we initialize our level, we want to load the right level
-            level = new Level(startinglevel);
+            level = new Level(startinglevel,player);
      
-            //at the start of the game we don't have a player yet
-            player = new Player(220,220);
+            
            
-            level.addCharacter(player);
+           
             level.addCharacter(new Player(450,450));
+            level.addCharacter(new Player(700,700));
+            level.addCharacter(new Player(1500,1000));
+            level.addCharacter(new Player(1000,1000));
+            level.addCharacter(new Player(1000,450));
+            level.addCharacter(player);
             physics = new Physics();     
             //and we create a controller, for now we use the MouseAndKeyBoardPlayerController
             playerController = new MouseAndKeyBoardPlayerController(player);
@@ -53,7 +58,7 @@ import Level.Level;
         public void render(GameContainer container, StateBasedGame sbg, Graphics g) throws SlickException {
             g.scale(Game.SCALE, Game.SCALE);
             //render the level
-            level.render();
+            level.render(g);
             
             
         }
